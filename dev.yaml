@@ -1,0 +1,65 @@
+---
+# Source: Details_v1/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: bookinfo-details
+  labels:
+    account: details
+---
+# Source: Details_v1/templates/service.yaml
+##################################################################################################
+# Details Service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+  labels:
+    app: details
+    env: dev
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9080
+    name: http
+  selector:
+    app: details
+---
+# Source: Details_v1/templates/deployment.yaml
+##################################################################################################
+# Details Deployment
+##################################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: details-v1
+  labels:
+    app: details
+    env: dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+        app: details
+        env: dev
+  template:
+    metadata:
+      labels:
+            app: details
+            env: dev
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+      - name: details
+        image: docker.io/istio/examples-bookinfo-details-v1:1.17.0
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 9080
+        securityContext:
+          runAsUser: 1000
+---
+# Source: Details_v1/templates/serviceaccount.yaml
+##################################################################################################
+# Details ServiceAccount
+##################################################################################################

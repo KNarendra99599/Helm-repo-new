@@ -1,0 +1,16 @@
+##################################################################################################
+# Details Service
+##################################################################################################
+apiVersion: v1
+kind: Service
+metadata:
+  name: details
+  labels:
+  {{- include "DETAILS.lables" . |nindent 4 }}
+spec:
+  type: {{ .Values.app.service.type }}
+  ports:
+  - port: {{ .Values.app.service.port }}
+    name: http
+  selector:
+    app: details
