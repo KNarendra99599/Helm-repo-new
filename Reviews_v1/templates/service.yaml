@@ -1,13 +1,13 @@
 ---
 ##################################################################################################
-# Details Service
+# Reviews Service
 ##################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.app.name }}
   labels:
-  {{- include "DETAILS.lables" . |nindent 4 }}
+  {{- include "Reviews.lables" . |nindent 4 }}
 spec:
   type: {{ .Values.app.service.type }}
   ports:

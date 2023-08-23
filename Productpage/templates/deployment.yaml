@@ -1,29 +1,39 @@
 ---
 ##################################################################################################
-# Details Deployment
+# Productpage Deployment
 ##################################################################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.app.name }}
   labels:
-  {{- include "DETAILS.lables" . |nindent 4 }}
+  {{- include "Productpage.lables" . |nindent 4 }}
 spec:
-  replicas: {{ .Values.app.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
-    {{- include "DETAILS.lables" . |nindent 6 }}
+    {{- include "Productpage.lables" . |nindent 6 }}
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9080"
+        prometheus.io/path: "/metrics"
       labels:
-      {{- include "DETAILS.lables" . |nindent 8 }}
+      {{- include "Productpage.lables" . |nindent 8 }}
     spec:
-      serviceAccountName: bookinfo-details
+      serviceAccountName: bookinfo-productpage
       containers:
       - name: {{ .Values.app.name }}
         image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
         imagePullPolicy: {{ .Values.app.image.pullPolicy }}
         ports:
         - containerPort: 9080
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
         securityContext:
           runAsUser: 1000
+      volumes:
+      - name: tmp
+        emptyDir: {}

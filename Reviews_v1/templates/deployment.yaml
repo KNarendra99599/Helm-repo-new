@@ -1,29 +1,42 @@
 ---
 ##################################################################################################
-# Details Deployment
+# Reviews Deployment
 ##################################################################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.app.name }}
   labels:
-  {{- include "DETAILS.lables" . |nindent 4 }}
+  {{- include "Reviews.lables" . |nindent 4 }}
 spec:
   replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
-    {{- include "DETAILS.lables" . |nindent 6 }}
+    {{- include "Reviews.lables" . |nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "DETAILS.lables" . |nindent 8 }}
+      {{- include "Reviews.lables" . |nindent 8 }}
     spec:
-      serviceAccountName: bookinfo-details
+      serviceAccountName: bookinfo-reviews
       containers:
       - name: {{ .Values.app.name }}
         image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
         imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+        env:
+        - name: LOG_DIR
+          value: "/tmp/logs"
         ports:
         - containerPort: 9080
+        volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+        - name: wlp-output
+          mountPath: /opt/ibm/wlp/output
         securityContext:
           runAsUser: 1000
+      volumes:
+      - name: wlp-output
+        emptyDir: {}
+      - name: tmp
+        emptyDir: {}

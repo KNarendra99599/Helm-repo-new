@@ -1,13 +1,13 @@
 ---
 ##################################################################################################
-# Details Service
+# Productpage services
 ##################################################################################################
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.app.name }}
   labels:
-  {{- include "DETAILS.lables" . |nindent 4 }}
+  {{- include "Productpage.lables" . |nindent 4 }}
 spec:
   type: {{ .Values.app.service.type }}
   ports:
@@ -15,3 +15,4 @@ spec:
     name: http
   selector:
     app: {{ .Values.app.name }}
+

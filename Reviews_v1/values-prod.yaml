@@ -3,7 +3,6 @@
 # Declare variables to be passed into your templates.
 app:
   replicaCount: 1
-  name: details
   env: dev
 
   image:
@@ -18,5 +17,7 @@ app:
 
 hpa:
   enabled: false
-
+  minReplicas: 2
+  maxReplicas: 10
+  averageUtilization: 50
 
