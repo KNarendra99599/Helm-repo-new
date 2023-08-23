@@ -14,8 +14,13 @@ app:
     tag: 1.17.0
 
   service:
+    name: ratings
     type: ClusterIP
     port: 9080
+  
+  ServiceAccount:
+    account: ratings
+
 
 hpa:
   enabled: false
