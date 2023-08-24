@@ -3,8 +3,9 @@
 # Declare variables to be passed into your templates.
 app:
   replicaCount: 1
-  name: ratings
+  name: ratings-v1
   env: dev
+  version: v1
 
 
   image:
@@ -15,12 +16,12 @@ app:
 
   service:
     name: ratings
+    service: ratings
     type: ClusterIP
     port: 9080
   
   ServiceAccount:
     account: ratings
-
 
 hpa:
   enabled: false

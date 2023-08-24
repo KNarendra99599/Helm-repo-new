@@ -8,15 +8,18 @@ metadata:
   name: {{ .Values.app.name }}
   labels:
   {{- include "Ratings.lables" . |nindent 4 }}
+  version: {{ .Values.app.version }}
 spec:
   replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
     {{- include "Ratings.lables" . |nindent 6 }}
+    version: {{ .Values.app.version }}
   template:
     metadata:
       labels:
       {{- include "Ratings.lables" . |nindent 8 }}
+      version: {{ .Values.app.version }}
     spec:
       serviceAccountName: bookinfo-ratings
       containers:

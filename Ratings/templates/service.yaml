@@ -8,6 +8,8 @@ metadata:
   name: {{ .Values.app.service.name }}
   labels:
   {{- include "Ratings.lables" . |nindent 4 }}
+  service: {{ .Values.app.service.service }}
+  
 spec:
   type: {{ .Values.app.service.type }}
   ports:
