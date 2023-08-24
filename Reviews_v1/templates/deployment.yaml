@@ -109,7 +109,7 @@ spec:
       serviceAccountName: bookinfo-reviews
       containers:
       - name: {{ .Values.app.reviews_v3.name }}
-        image: d{{ .Values.app.image.reviews_v3.repository }}:{{ .Values.app.image.reviews_v3.tag }}
+        image: {{ .Values.app.image.reviews_v3.repository }}:{{ .Values.app.image.reviews_v3.tag }}
         imagePullPolicy: {{ .Values.app.image.reviews_v3.pullPolicy }}
         env:
         - name: LOG_DIR
