@@ -3,15 +3,39 @@
 # Declare variables to be passed into your templates.
 app:
   replicaCount: 1
-  name: reviews
-  env: dev
+  reviews-v1:
+    name: reviews-v1
+    version: v1
+    env: dev
+  
+  reviews-v2:
+    name: reviews-v2
+    version: v2
+    env: dev
 
+  reviews-v3:
+    name: reviews-v3
+    version: v3
+    env: dev
 
   image:
-    repository: docker.io/istio/examples-bookinfo-reviews-v1
-    pullPolicy: IfNotPresent
-    # Overrides the image tag whose default is the chart appVersion.
-    tag: 1.17.0
+    reviews-v1:
+      repository: docker.io/istio/examples-bookinfo-reviews-v1
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: 1.17.0
+
+    reviews-v2:
+      repository: docker.io/istio/examples-bookinfo-reviews-v2
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: 1.17.0
+    
+    reviews-v3:
+      repository: docker.io/istio/examples-bookinfo-reviews-v3
+      pullPolicy: IfNotPresent
+      # Overrides the image tag whose default is the chart appVersion.
+      tag: 1.17.0
 
   service:
     name: reviews
