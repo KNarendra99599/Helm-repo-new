@@ -8,17 +8,18 @@ metadata:
   name: {{ .Values.app.reviews-v1.name }}
   labels:
   {{- include "Reviews.lables" . |nindent 4 }}
-  version: {{ .Values.app.reviews-v1.version }}
+    version: {{ .Values.app.reviews-v1.version }}
 spec:
   replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
     {{- include "Reviews.lables" . |nindent 6 }}
+      version: {{ .Values.app.reviews-v1.version }}
   template:
     metadata:
       labels:
       {{- include "Reviews.lables" . |nindent 8 }}
-      version: {{ .Values.app.reviews-v1.version }}
+        version: {{ .Values.app.reviews-v1.version }}
     spec:
       serviceAccountName: bookinfo-reviews
       containers:
