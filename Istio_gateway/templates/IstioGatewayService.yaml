@@ -1,0 +1,20 @@
+---
+##################################################################################################
+# Istio Gateway Service
+##################################################################################################
+apiVersion: networking.istio.io/v1alpha3
+kind: Gateway
+metadata:
+  name: {{ .Values.app.service.name }}
+spec:
+  # The selector matches the ingress gateway pod labels.
+  # If you installed Istio using Helm following the standard documentation, this would be "istio=ingress"
+  selector:
+    istio: {{ .Values.app.service.istio }} # use istio default controller
+  servers:
+  - port:
+      number: {{ .Values.app.service.number }} 
+      name: http
+      protocol: HTTP
+    hosts:
+    - "*"

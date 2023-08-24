@@ -1,0 +1,13 @@
+# Default values for Details.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+app:
+  name: bookinfo
+  host: productpage
+  number: 9080
+
+  service:
+    name: bookinfo-gateway
+    istio: ingressgateway
+    number: 80
+  
