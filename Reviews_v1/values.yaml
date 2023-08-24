@@ -39,6 +39,7 @@ app:
 
   service:
     name: reviews
+    service: reviews
     type: ClusterIP
     port: 9080
 

@@ -7,7 +7,6 @@ app:
   env: dev
   version: v1
 
-
   image:
     repository: docker.io/istio/examples-bookinfo-ratings-v1
     pullPolicy: IfNotPresent
