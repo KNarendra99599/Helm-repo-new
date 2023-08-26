@@ -1,29 +1,48 @@
 ---
 ##################################################################################################
-# Details Deployment
+# EKS_Autoscaler Deployment
 ##################################################################################################
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.app.name }}
+  {{- include "EKS_Autoscaler.name" . |nindent 4 }}
   labels:
-  {{- include "DETAILS.lables" . |nindent 4 }}
+    {{- include "EKS_Autoscaler.lables" . |nindent 4 }}
 spec:
   replicas: {{ .Values.app.replicaCount }}
   selector:
     matchLabels:
-    {{- include "DETAILS.lables" . |nindent 6 }}
+      {{- include "EKS_Autoscaler.lables" . |nindent 6 }}
   template:
     metadata:
       labels:
-      {{- include "DETAILS.lables" . |nindent 8 }}
+        {{- include "EKS_Autoscaler.lables" . |nindent 8 }}
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: 'false'
     spec:
-      serviceAccountName: bookinfo-details
+      serviceAccountName: {{ .Values.app.name }}
       containers:
-      - name: {{ .Values.app.name }}
-        image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
-        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
-        ports:
-        - containerPort: 9080
-        securityContext:
-          runAsUser: 1000
+        - image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+          imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+          name: {{ .Values.app.name }}
+          resources:
+          {{- toYaml .Values.app.computeres }}
+          # https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md
+          command: 
+            - ./cluster-autoscaler
+            - --v=4
+            - --stderrthreshold=info
+            - --cloud-provider=aws
+            - --skip-nodes-with-local-storage=false
+            - --expander=least-waste
+            - --node-group-auto-discovery=asg:tag=k8s.io/cluster-autoscaler/enabled,k8s.io/cluster-autoscaler/demo_cluster # Update cluster
+            - --balance-similar-node-groups
+            - --skip-nodes-with-system-pods=false
+          volumeMounts:
+            - name: {{ .Values.app.volumeMounts.name }}
+              mountPath: /etc/ssl/certs/ca-certificates.crt #/etc/ssl/certs/ca-bundle.crt for Amazon Linux Worker Nodes
+              readOnly: {{ .Values.app.volumeMounts.readOnly }}
+      volumes:
+        - name: {{ .Values.app.volumeMounts.name }}
+          hostPath:
+            path: "/etc/ssl/certs/ca-bundle.crt"

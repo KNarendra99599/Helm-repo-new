@@ -3,26 +3,28 @@
 # Declare variables to be passed into your templates.
 app:
   replicaCount: 1
-  name: details
-  env: dev
+  name: cluster-autoscaler
 
   image:
-    repository: docker.io/istio/examples-bookinfo-details-v1
-    pullPolicy: IfNotPresent
+    repository: registry.k8s.io/autoscaling/cluster-autoscaler
+    pullPolicy: "Always"
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 1.17.0
+    tag: v1.26.4
+  
+  computeres:
+    limits:
+      cpu: 100m
+      memory: 300Mi
+    requests:
+      cpu: 100m
+      memory: 300Mi
+  
+  volumeMounts:
+    - name: ssl-certs
+      readOnly: true
 
-  service:
-    name: details
-    service: details
-    type: ClusterIP
-    port: 9080
-
-  ServiceAccount:
-    account: details
 
 
-hpa:
-  enabled: false
+
 
 
