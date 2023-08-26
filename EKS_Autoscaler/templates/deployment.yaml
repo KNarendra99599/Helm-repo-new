@@ -1,0 +1,29 @@
+---
+##################################################################################################
+# Details Deployment
+##################################################################################################
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.app.name }}
+  labels:
+  {{- include "DETAILS.lables" . |nindent 4 }}
+spec:
+  replicas: {{ .Values.app.replicaCount }}
+  selector:
+    matchLabels:
+    {{- include "DETAILS.lables" . |nindent 6 }}
+  template:
+    metadata:
+      labels:
+      {{- include "DETAILS.lables" . |nindent 8 }}
+    spec:
+      serviceAccountName: bookinfo-details
+      containers:
+      - name: {{ .Values.app.name }}
+        image: {{ .Values.app.image.repository }}:{{ .Values.app.image.tag }}
+        imagePullPolicy: {{ .Values.app.image.pullPolicy }}
+        ports:
+        - containerPort: 9080
+        securityContext:
+          runAsUser: 1000

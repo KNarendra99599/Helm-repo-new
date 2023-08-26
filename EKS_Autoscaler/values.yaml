@@ -1,0 +1,28 @@
+# Default values for Details.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+app:
+  replicaCount: 1
+  name: details
+  env: dev
+
+  image:
+    repository: docker.io/istio/examples-bookinfo-details-v1
+    pullPolicy: IfNotPresent
+    # Overrides the image tag whose default is the chart appVersion.
+    tag: 1.17.0
+
+  service:
+    name: details
+    service: details
+    type: ClusterIP
+    port: 9080
+
+  ServiceAccount:
+    account: details
+
+
+hpa:
+  enabled: false
+
+
