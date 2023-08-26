@@ -5,7 +5,7 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  {{- include "EKS_Autoscaler.name" . |nindent 4 }}
+{{- include "EKS_Autoscaler.name" . |nindent 2 }}
   labels:
   {{- include "EKS_Autoscaler.lables01" . |nindent 4 }}
 roleRef:

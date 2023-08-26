@@ -5,7 +5,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  {{- include "EKS_Autoscaler.name" . |nindent 4 }}
+{{- include "EKS_Autoscaler.name" . |nindent 2 }}
   labels:
     {{- include "EKS_Autoscaler.lables" . |nindent 4 }}
 spec:
