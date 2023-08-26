@@ -26,7 +26,7 @@ spec:
           imagePullPolicy: {{ .Values.app.image.pullPolicy }}
           name: {{ .Values.app.name }}
           resources:
-          {{- toYaml .Values.app.computeres }}
+          {{- toYaml .Values.app.computeres |nindent 12 }}
           # https://github.com/kubernetes/autoscaler/blob/master/cluster-autoscaler/cloudprovider/aws/README.md
           command: 
             - ./cluster-autoscaler
