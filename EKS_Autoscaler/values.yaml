@@ -20,8 +20,8 @@ app:
       memory: 300Mi
   
   volumeMounts:
-    - name: ssl-certs
-      readOnly: true
+    name: ssl-certs
+    readOnly: true
 
 
 
