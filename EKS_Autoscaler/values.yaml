@@ -24,7 +24,7 @@ app:
     readOnly: true
   
   ServiceAccount:
-    eks.amazonaws.com/role-arn: arn:aws:iam::995857115684:role/eks-cluster-autoscaler
+    role-arn: arn:aws:iam::995857115684:role/eks-cluster-autoscaler
 
 
 
