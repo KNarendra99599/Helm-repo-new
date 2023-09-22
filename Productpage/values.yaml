@@ -7,10 +7,10 @@ app:
   env: dev
 
   image:
-    repository: docker.io/istio/examples-bookinfo-productpage-v1
+    repository: 120583202101.dkr.ecr.us-east-1.amazonaws.com/genpact-apaas
     pullPolicy: IfNotPresent
     # Overrides the image tag whose default is the chart appVersion.
-    tag: 1.17.0
+    tag: ui_v3.2.5.27
 
   service:
     name: productpage
